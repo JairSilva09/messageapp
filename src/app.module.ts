@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { MensajesController } from './mensajes/mensajes.controller';
 import { Mensaje } from './mensajes/entities/mensaje/mensaje.entity';
+import { Usuario } from './usuarios/entities/usuario/usuario.entity';
 import { MensajesService } from './mensajes/mensajes.service';
 
 @Module({
@@ -16,10 +17,11 @@ import { MensajesService } from './mensajes/mensajes.service';
         username: 'nest',
         password: 'app',
         database: 'sendmeapp',
-        entities: [Mensaje],
+        entities: [Mensaje,Usuario],
         synchronize: true,
       }
-    )
+    ),
+    TypeOrmModule.forFeature([Mensaje,Usuario]),
   ],
   controllers: [AppController, MensajesController],
   providers: [AppService, MensajesService],

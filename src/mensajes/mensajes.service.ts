@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Mensaje } from './entities/mensaje/mensaje.entity';
+import { Mensaje as mns } from 'src/interfaces/mensaje.interface';
 import { CreateMensajeDto } from './dto/create-mensaje-dto/create-mensaje-dto';
 
 
@@ -12,8 +13,22 @@ export class MensajesService {
     private mensajesRepository: Repository<Mensaje>,
   ) {}
 
-  createMensaje(MensajeNuevo: CreateMensajeDto): Promise<>{
+  createMensaje(MensajeNuevo: CreateMensajeDto): Promise<Mensaje>{
+    const nuevo = new Mensaje();
+    nuevo.mensaje = MensajeNuevo.mensaje;
+    nuevo.nick = MensajeNuevo.nick;
+    return this.mensajesRepository.save(nuevo);
 
+  }
+
+  async updateMensaje(id: number,MensajeActualizar: CreateMensajeDto): Promise<Mensaje> {
+    const mensajeUpdate = await this.mensajesRepository.findOneBy({ id });
+    if(!mensajeUpdate){
+      throw new NotFoundException(`No se encontró el mensaje con id ${id}`);
+    }
+    mensajeUpdate.nick = MensajeActualizar.nick;
+    mensajeUpdate.mensaje = MensajeActualizar.mensaje;
+    return await this.mensajesRepository.save(mensajeUpdate);
   }
 
   findAll(): Promise<Mensaje[]> {
