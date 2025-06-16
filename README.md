@@ -29,7 +29,7 @@ npm install
 JWT_SECRET=claveSuperSecretaJWT123
 DATABASE_USER=tu_usuario_mysql
 DATABASE_PASSWORD=tu_contraseña_mysql
-
+```
 ###🧱 Base de datos
 
 La base de datos se llama sendmeapp y tiene dos tablas relacionadas
