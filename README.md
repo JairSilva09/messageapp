@@ -22,7 +22,7 @@ Una API RESTful construida con [NestJS](https://nestjs.com/) que permite crear, 
 git clone https://github.com/tuusuario/sendmeapp.git
 cd sendmeapp
 
-### 2. Instala las dependencia
+## 2. Instala las dependencia
 npm install
 
 # .env
@@ -30,7 +30,7 @@ JWT_SECRET=claveSuperSecretaJWT123
 DATABASE_USER=tu_usuario_mysql
 DATABASE_PASSWORD=tu_contraseña_mysql
 ```
-###🧱 Base de datos
+##🧱 Base de datos
 
 La base de datos se llama sendmeapp y tiene dos tablas relacionadas
 📄 Tabla: usuario
@@ -71,7 +71,7 @@ npm run build
 npm run start:prod
 ```
 
-###🧑‍💻 Endpoints principales
+##🧑‍💻 Endpoints principales
 Path dev: http://localhost:3000/api/v1/
 Path prod: {tu host}/api/v1/
 POST /api/v1/auth/register → Registro de usuarios
@@ -81,12 +81,12 @@ POST /api/v1/mensajes → Crear mensaje (requiere JWT)
 PATCH /api/v1/mensajes/:id → Editar mensaje (solo autor)
 DELETE /api/v1/mensajes/:id → Eliminar mensaje (solo autor)
 
-###📌 Notas
+##📌 Notas
 Asegúrate de tener MySQL corriendo con una base de datos llamada sendmeapp.
 La sincronización de entidades (synchronize: true) está habilitada solo para desarrollo.
 Usa contraseñas seguras en producción y cambia el JWT_SECRET.
 
-###📜 Licencia
+##📜 Licencia
 MIT © Jair Fernando Silva
 
 
