@@ -1,4 +1,10 @@
+import { IsString, IsNotEmpty } from 'class-validator';
 export class CreateMensajeDto {
-    readonly nick: string;
-    readonly mensaje: string;
+  @IsString()
+  @IsNotEmpty()
+  readonly nick: string;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly mensaje: string;
 }

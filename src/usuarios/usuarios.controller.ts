@@ -1,81 +1,29 @@
-import { Body, Controller, Post, Get, Put, Delete, Res, HttpStatus, Param } from '@nestjs/common';
-import { CreateUsuarioDto } from './dto/create-usuario-dto/create-usuario-dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { UsuariosService } from './usuarios.service';
+import { CreateUsuarioDto } from './dto/create-usuario.dto';
+import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
 @Controller('usuarios')
 export class UsuariosController {
-    @Post()
-        createPost(@Res() response){
-            // this.mensajesService.createMensaje(createMensajeDTO).then(
-            //     mensaje => {
-            //         response.status(HttpStatus.CREATED).json(mensaje)
-            //     }
-            // ).catch(() => {
-            //         response.status(HttpStatus.FORBIDDEN).json({
-            //             mensaje: 'No se creo el mensaje'
-            //         })
-            //     }
-            // )
-            response.status(HttpStatus.OK).json({
-                mensaje: "todo bien hasta ahora"
-            })
-        }
-    
-        @Get()
-        getAllmensajes(@Res() response){
-            // this.mensajesService.findAll().then(
-            //     mensajeList => {
-            //         response.status(HttpStatus.OK).json(mensajeList)
-            //     }
-            // ).catch(()=>{
-            //     response.status(HttpStatus.FORBIDDEN).json({
-            //         mensaje: 'Error en la obtencion de mensajes'
-            //     })
-            // })
-        }
-    
-        @Get(':id')
-        findOne(@Param('id') id: number,@Res() response) {
-            // this.mensajesService.findOne(id)
-            // .then(
-            //     mensaje => {
-            //         response.status(HttpStatus.OK).json(mensaje)
-            //     }
-            // ).catch(
-            //      () => {
-            //         response.status(HttpStatus.FORBIDDEN).json({
-            //             mensaje: 'Erro al traer el mensaje'
-            //         })
-            //     }
-            // )
-        }
-        
-        @Put(':id')
-        update(){
-            // this.mensajesService.updateMensaje(idMensaje,update).then(
-            //     mensaje => {
-            //         response.status(HttpStatus.OK).json(mensaje)
-            //     }
-            // ).catch(
-            //     () => {
-            //         response.status(HttpStatus.FORBIDDEN).json({
-            //             mensaje: 'Error en la actualizacion de mensaje'
-            //         })
-            //     }
-            // )
-        }
-    
-        @Delete(':id')
-        delete(@Res() response,@Param('id') idMensaje: number){
-            // this.mensajesService.remove(idMensaje).then(
-            //     res => {
-            //         response.status(HttpStatus.OK).json(res)
-            //     }
-            // ).catch(
-            //     () => {
-            //         response.status(HttpStatus.FORBIDDEN).json({
-            //             mensaje: 'Error en la eliminacion de mensaje'
-            //         })
-            //     }
-            // )
-        }
+  constructor(private readonly usuariosService: UsuariosService) {}
+
+  @Post()
+  create(@Body() createUsuarioDto: CreateUsuarioDto) {
+    return this.usuariosService.create(createUsuarioDto);
+  }
+
+  @Get(':id')
+  findOne(@Param('email') email: string) {
+    return this.usuariosService.findOneByEmail(email)
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
+    return this.usuariosService.update(+id, updateUsuarioDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.usuariosService.remove(+id);
+  }
 }

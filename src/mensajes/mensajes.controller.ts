@@ -1,19 +1,23 @@
-import { Body, Controller, Post, Get, Put, Delete, Res, HttpStatus, Param } from '@nestjs/common';
+import { Body, Controller, Post, Get, Put, Delete, Res, HttpStatus, Param, UseGuards, Req } from '@nestjs/common';
 import { CreateMensajeDto } from './dto/create-mensaje-dto/create-mensaje-dto';
+import { UpdateMensajeDto } from './dto/create-mensaje-dto/update-mensajes-dto';
 import { MensajesService } from './mensajes.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('mensajes')
 export class MensajesController {
     
-    constructor(private mensajesService: MensajesService) {}
+    constructor(private readonly mensajesService: MensajesService) {}
 
+    @UseGuards(AuthGuard)
     @Post()
     createPost(@Body() createMensajeDTO: CreateMensajeDto, @Res() response){
         this.mensajesService.createMensaje(createMensajeDTO).then(
             mensaje => {
                 response.status(HttpStatus.CREATED).json(mensaje)
             }
-        ).catch(() => {
+        ).catch(
+            () => {
                 response.status(HttpStatus.FORBIDDEN).json({
                     mensaje: 'No se creo el mensaje'
                 })
@@ -21,6 +25,7 @@ export class MensajesController {
         )
     }
 
+    @UseGuards(AuthGuard)
     @Get()
     getAllmensajes(@Res() response){
         this.mensajesService.findAll().then(
@@ -34,6 +39,7 @@ export class MensajesController {
         })
     }
 
+    @UseGuards(AuthGuard)
     @Get(':id')
     findOne(@Param('id') id: number,@Res() response) {
         this.mensajesService.findOne(id)
@@ -51,30 +57,31 @@ export class MensajesController {
     }
     
     @Put(':id')
-    update(@Body() update: CreateMensajeDto,@Res() response,@Param('id') idMensaje: number){
-        this.mensajesService.updateMensaje(idMensaje,update).then(
+    update(@Body() update: UpdateMensajeDto,@Res() response,@Param('id') idMensaje: number, @Req() req){
+        this.mensajesService.updateMensaje(idMensaje,update,req.user).then(
             mensaje => {
                 response.status(HttpStatus.OK).json(mensaje)
             }
         ).catch(
             () => {
                 response.status(HttpStatus.FORBIDDEN).json({
-                    mensaje: 'Error en la actualizacion de mensaje'
+                    mensaje: 'Error al actualizar mensaje'
                 })
             }
         )
     }
 
+    @UseGuards(AuthGuard)
     @Delete(':id')
-    delete(@Res() response,@Param('id') idMensaje: number){
-        this.mensajesService.remove(idMensaje).then(
+    delete(@Res() response,@Param('id') idMensaje: number, @Req() req){
+        this.mensajesService.remove(idMensaje,req.user).then(
             res => {
                 response.status(HttpStatus.OK).json(res)
             }
         ).catch(
             () => {
                 response.status(HttpStatus.FORBIDDEN).json({
-                    mensaje: 'Error en la eliminacion de mensaje'
+                    mensaje: 'Error al eliminar mensaje'
                 })
             }
         )
