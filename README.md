@@ -32,7 +32,6 @@ DATABASE_PASSWORD=tu_contraseña_mysql
 
 ###🧱 Base de datos
 
-```bash
 La base de datos se llama sendmeapp y tiene dos tablas relacionadas
 📄 Tabla: usuario
 
