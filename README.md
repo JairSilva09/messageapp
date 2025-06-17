@@ -30,12 +30,15 @@ cd sendmeapp
 npm install
 ```
 
-### 3. Crea un archivo `.env` en la raíz con lo siguiente:
+### 3. Crea un archivo `.env` en la raíz o cambia el nombre del archivo `.env.example` a `.env` con lo siguiente:
 
 ```env
 JWT_SECRET=claveSuperSecretaJWT123
 DATABASE_USER=tu_usuario_mysql
 DATABASE_PASSWORD=tu_contraseña_mysql
+HOST=
+DATABASE_NAME=sendmeapp
+DATABASE_PORT=
 ```
 
 ---
@@ -43,6 +46,7 @@ DATABASE_PASSWORD=tu_contraseña_mysql
 ## 🧱 Base de datos
 
 La base de datos se llama **sendmeapp** y tiene dos tablas relacionadas:
+Debes crear esta base de datos mysql pero no le agregues tablas. Ellas se crearan junto a sus relaciones al correr la aplicacion por primera vez
 
 ### 📄 Tabla: `usuario`
 
